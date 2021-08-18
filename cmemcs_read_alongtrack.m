@@ -1,7 +1,11 @@
-% code to read and assemble the downloaded AVISO along track data
+% code to read and assemble the downloaded CMEMS (AVISO) along track data
 % this code assumes you are on a UNIX-like system
 
-% this assume you have downloaded the global, delayed-time, along-track, unfiltered, absolute dynamic topography data from AVISO
+% this assume you have downloaded the global, delayed-time, along-track, unfiltered, (absolute dynamic topography data from AVISO) Sea Level Anomalies from CMEMS (https://resources.marine.copernicus.eu/?option=com_csw&view=details&product_id=SEALEVEL_GLO_PHY_L3_REP_OBSERVATIONS_008_062)
+
+% data for Jason 3 are organized by individual netcdf files with extension .nc
+% data for Jason 2 are organized in subfolders by years; individual netcdf files with extension .nc
+
 
 % data for TOPEX/Poseidon are organized in subfolders by years; individual files are zipped with extension .gz
 
