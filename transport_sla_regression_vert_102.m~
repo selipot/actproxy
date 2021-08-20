@@ -50,11 +50,11 @@ dM3(8) = 0.5*(dM2(9)+dM2(10)); %P3-P4
 dM3(9) = 0.5*(dM2(10)+dM2(11)); %P3-P4
 
 % load the assembled sla data from the read_alongtrack.m code
-load('/Users/gnovelli/Desktop/sla-cmems/adt96_tp.mat','adt96_tp_vxxc');
-load('/Users/gnovelli/Desktop/sla-cmems/adt96_j1.mat','adt96_j1_vxxc');
-load('/Users/gnovelli/Desktop/sla-cmems/adt96_j2.mat','adt96_j2_vxxc');
-load('/Users/gnovelli/Desktop/sla-cmems/adt96_j3.mat','adt96_j3_vxxc');
-%
+load('adt96_tp.mat','adt96_tp_vxxc');
+load('adt96_j1.mat','adt96_j1_vxxc');
+load('adt96_j2.mat','adt96_j2_vxxc');
+load('adt96_j3.mat','adt96_j2_vxxc');
+
 % convert int16 to double
 for k = 1:length(adt96_tp_vxxc)
     adt96_tp_vxxc(k).track = double(adt96_tp_vxxc(k).track);
@@ -121,7 +121,7 @@ for k = 1:length(ncycle)
 end
 
 clear cycle_*
-clear adt96_tp_vxxc adt96_j1_vxxc adt96_j2_vxxc adt96_j3_vxxc
+clear adt96_tp_vxxc adt96_j1_vxxc adt96_j2_vxxc adt96_j2_vxxc
 clear ADT cycle latitude longitude time
 
 ncycle_adt = ncycle;
