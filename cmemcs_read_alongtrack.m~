@@ -63,7 +63,7 @@ for year = 1993:2002
     end
     end
 end
-%    
+%%    
 % jason 1
 
 % basedir = 'aviso/global/delayed-time/along-track/unfiltered/adt/j1/';
@@ -92,7 +92,7 @@ for year = 2002:2008
                 for m = 1:length(netvar)
                     eval([netvar{m}  '= ncread([''foo.nc''],''' netvar{m} ''');']);
                 end
-                adt96_j1_vxxc(n).ADT = sla_unfiltered(q96)+mdt(q96);
+                adt96_j1_vxxc(n).ADT = ADT(q96);
                 adt96_j1_vxxc(n).cycle = cycle(q96);
                 adt96_j1_vxxc(n).latitude = latitude(q96);
                 adt96_j1_vxxc(n).longitude = longitude(q96);
@@ -101,33 +101,30 @@ for year = 2002:2008
                 adt96_j1_vxxc(n).file = filelist(k).name;
                 disp(n);
                 sprintf('%d',n);
-                clear sla_unfiltered mdt cycle latitude longitude time track q96
+                clear ADT cycle latitude longitude time track q96
             end
             eval(['!rm foo.nc']);
-    end
     end
 end
 
 
 % jason 2
 
-% basedir = 'aviso/global/delayed-time/along-track/unfiltered/adt/j2/';
-basedir = '/Users/gnovelli/Desktop/sla-cmems/j2/';
+basedir = 'aviso/global/delayed-time/along-track/unfiltered/adt/j2/';
+
 n = 0;
 
-% for year = 2008:2016;
-for year = 2008:2016
-    for month = 1:12
-        
-    filelist = dir([basedir num2str(year) '/' num2str(month,'%02d')]);
+for year = 2008:2016;
+    
+    filelist = dir([basedir num2str(year)]);
     % remove directories
     q = find([filelist.isdir] == 1);
     filelist(q) = [];
         
     for k = 1:length(filelist)
         
-            eval(['!cp ' basedir num2str(year) '/' num2str(month,'%02d') '/' filelist(k).name ' ./foo.nc']);
-%             eval(['!gunzip -f foo.nc.gz']);
+            eval(['!cp ' basedir num2str(year) '/' filelist(k).name ' ./foo.nc.gz']);
+            eval(['!gunzip -f foo.nc.gz']);
             pause(.1);
             track = ncread(['foo.nc'],'track');
             % should load ADT, cycle, latitude, longitude, time, track, all of same dimension
@@ -137,7 +134,7 @@ for year = 2008:2016
                 for m = 1:length(netvar)
                     eval([netvar{m}  '= ncread([''foo.nc''],''' netvar{m} ''');']);
                 end
-                adt96_j2_vxxc(n).ADT =  sla_unfiltered(q96)+mdt(q96);
+                adt96_j2_vxxc(n).ADT = ADT(q96);
                 adt96_j2_vxxc(n).cycle = cycle(q96);
                 adt96_j2_vxxc(n).latitude = latitude(q96);
                 adt96_j2_vxxc(n).longitude = longitude(q96);
@@ -146,55 +143,9 @@ for year = 2008:2016
                 adt96_j2_vxxc(n).file = filelist(k).name;
                 disp(n);
                 sprintf('%d',n);
-                clear sla_unfiltered mdt cycle latitude longitude time track q96
+                clear ADT cycle latitude longitude time track q96
             end
             eval(['!rm foo.nc']);
-    end
-    end
-    
-end
-%
-% jason 3
-
-% basedir = 'aviso/global/delayed-time/along-track/unfiltered/adt/j2/';
-basedir = '/Users/gnovelli/Desktop/sla-cmems/j3/';
-n = 0;
-
-
-for year = 2016:2020
-    for month = 1:12
-        
-    filelist = dir([basedir num2str(year) '/' num2str(month,'%02d')]);
-    % remove directories
-    q = find([filelist.isdir] == 1);
-    filelist(q) = [];
-        
-    for k = 1:length(filelist)
-        
-            eval(['!cp ' basedir num2str(year) '/' num2str(month,'%02d') '/' filelist(k).name ' ./foo.nc']);
-%             eval(['!gunzip -f foo.nc.gz']);
-            pause(.1);
-            track = ncread(['foo.nc'],'track');
-            % should load ADT, cycle, latitude, longitude, time, track, all of same dimension
-            q96 = find(track==96);
-            if ~isempty(q96)
-                n = n+1;
-                for m = 1:length(netvar)
-                    eval([netvar{m}  '= ncread([''foo.nc''],''' netvar{m} ''');']);
-                end
-                adt96_j3_vxxc(n).ADT =  sla_unfiltered(q96)+mdt(q96);
-                adt96_j3_vxxc(n).cycle = cycle(q96);
-                adt96_j3_vxxc(n).latitude = latitude(q96);
-                adt96_j3_vxxc(n).longitude = longitude(q96);
-                adt96_j3_vxxc(n).time = time(q96);
-                adt96_j3_vxxc(n).track = track(q96);
-                adt96_j3_vxxc(n).file = filelist(k).name;
-                disp(n);
-                sprintf('%d',n);
-                clear sla_unfiltered mdt cycle latitude longitude time track q96
-            end
-            eval(['!rm foo.nc']);
-    end
     end
     
 end
@@ -202,5 +153,4 @@ end
 save('adt96_tp.mat','adt96_tp_vxxc');
 save('adt96_j1.mat','adt96_j1_vxxc');
 save('adt96_j2.mat','adt96_j2_vxxc');
-save('adt96_j3.mat','adt96_j3_vxxc');
 
